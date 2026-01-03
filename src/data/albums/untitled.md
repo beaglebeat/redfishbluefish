@@ -2,7 +2,7 @@
 name: "D'Angelo - Untitled (How Does it Feel)"
 image:
   src: '/images/albums/untitled.webp'
-  alt: 'A serene forest scene with tall pine trees, soft mist, and an acoustic guitar subtly integrated into the background, evoking tranquility and introspection.'
+  alt: 'Untitled by DAngelo.'
 publishDate: 2025-11-15
 tracks:
   - "D'Angelo - Untitled (How Does it Feel)"
@@ -21,16 +21,26 @@ artist: 'cadenza'
 
 
 **CADENZA** live at Alden Memorial
+
 November 15th, 2025
 
-FEATURING
+**FEATURING**
+
 Vocals - Grace Touglo (of Edsworth)
+
 Drums - Martin Kalo
+
 Guitar - Logan Kippnick
+
 Keys - Benjamin Cahn
+
 Bass - Tyler Lash
 
-SPECIAL THANKS
+
+**SPECIAL THANKS**
+
 Multitracks - Sam Ollari
+
 Lights - Josh Bornfriend
+
 Mixing - Martin Kalo

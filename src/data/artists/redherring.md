@@ -1,5 +1,5 @@
 ---
-name: ''
+name: 'subtitle'
 stage_name: 'Red Herring'
 genre: 'Defining'
 image:
