@@ -1,26 +1,8 @@
-# Players Club: A Free Astro Template for Showcasing Music Artists
+# Welcome to the RFBF GitHub repo
+There might be some hidden easter eggs
 
+## Players Club
 Players Club is a free Astro template for showcasing music artists—an experimental proof of concept built in collaboration with [Alex Tkachev](https://alextkachev.com/).
-
-![Image Title](https://tympanus.net/codrops/wp-content/uploads/2025/02/PlayersClub_Template_featured.png)
-
-[Article on Codrops](https://tympanus.net/codrops/?p=86632)
-
-[Demo](https://playersclub.crnacura.workers.dev/)
-
-## Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
 
 ## Credits
 
