@@ -243,3 +243,15 @@ dd {
     gap: 1rem;
   }
 }
+
+.red {
+  color: #fc908b;
+}
+.blue {
+  color: #5396a7;
+}
+
+.measured {
+  text-indent: 2rem;
+  max-width: 54ch;
+}
