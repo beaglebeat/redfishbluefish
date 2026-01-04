@@ -16,3 +16,15 @@ Despite the trials and tribulations, we've only become more self-assured about w
 Sincerely,
 
 The band currently and formerly known as Cadenza
+
+**MEMBERS**
+
+Ben Cahn - Keys
+
+Logan Kippnick - Guitar
+
+Martin Kalo - Drums
+
+Mattan Mohel - Tenor Sax
+
+Tyler Lash - Bass
