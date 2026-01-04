@@ -1,12 +1,205 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
 
 const title = "Red Fish Blue Fish - Shows";
+const shows = await getCollection("shows");
+
+// Artist URL: lowercase + remove spaces
+const artistHref = (slug) =>
+  `/${encodeURIComponent(
+    String(slug)
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, "")
+  )}`;
+
+// Parse YYYY-MM-DD as a LOCAL date (prevents “one day early” UTC shift)
+const parseLocalDate = (ymd) => {
+  const [y, m, d] = String(ymd).split("-").map(Number);
+  return new Date(y, m - 1, d);
+};
+
+// Combine date + optional HH:MM time (local)
+const toDateTime = (dateYmd, time) => {
+  const dt = parseLocalDate(dateYmd);
+  if (!time) return dt;
+
+  const hhmm = String(time).trim();
+  const m = /^(\d{1,2}):(\d{2})$/.exec(hhmm);
+  if (!m) return dt;
+
+  dt.setHours(Number(m[1]), Number(m[2]), 0, 0);
+  return dt;
+};
+
+const now = new Date();
+
+// No extra “parsed” array; just decorate+filter+sort directly
+const upcoming = shows
+  .map((s) => ({ ...s, dt: toDateTime(s.data.date, s.data.time) }))
+  .filter((s) => s.dt >= now)
+  .sort((a, b) => a.dt - b.dt);
+
+const past = shows
+  .map((s) => ({ ...s, dt: toDateTime(s.data.date, s.data.time) }))
+  .filter((s) => s.dt < now)
+  .sort((a, b) => b.dt - a.dt);
 ---
 
 <BaseLayout title={title}>
   <div class="content content--page">
-    <h1>Upcoming Shows</h1>
-    <p>This page will be setup soon.</p>
+    <h1>Shows</h1>
+
+    <h2><span class="red">Upcoming</span></h2>
+
+    {upcoming.length > 0 ? (
+      <ul class="shows">
+        {upcoming.map((s) => (
+          <li class="show">
+            <div class="date">
+              {s.dt.toLocaleDateString("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </div>
+
+            <div class="meta">
+              {s.data.artists?.length ? (
+                <div class="artists">
+                  {s.data.artists.map((slug, i) => (
+                    <>
+                      <a href={artistHref(slug)}>{slug}</a>
+                      {i < s.data.artists.length - 1 && (
+                        <span class="sep">, </span>
+                      )}
+                    </>
+                  ))}
+                </div>
+              ) : null}
+
+              <div class="title">{s.data.title}</div>
+
+              <div class="where">
+                {s.data.venue} – {s.data.city}
+                {s.data.time ? ` – ${s.data.time}` : ""}
+              </div>
+
+              {s.data.tickets ? (
+                <a href={s.data.tickets} target="_blank" rel="noopener noreferrer">
+                  Tickets
+                </a>
+              ) : null}
+            </div>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="muted">No upcoming shows at this time.</p>
+    )}
+
+    <h2><span class="blue">Past</span></h2>
+
+    {past.length > 0 ? (
+      <ul class="shows">
+        {past.map((s) => (
+          <li class="show">
+            <div class="date">
+              {s.dt.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </div>
+
+            <div class="meta">
+              {s.data.artists?.length ? (
+                <div class="artists">
+                  {s.data.artists.map((slug, i) => (
+                    <>
+                      <a href={artistHref(slug)}>{slug}</a>
+                      {i < s.data.artists.length - 1 && (
+                        <span class="sep">, </span>
+                      )}
+                    </>
+                  ))}
+                </div>
+              ) : null}
+
+              <div class="title">{s.data.title}</div>
+
+              <div class="where">
+                {s.data.venue} – {s.data.city}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p class="muted">No past shows yet.</p>
+    )}
   </div>
+
+  <style>
+    .shows {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0 2.5rem;
+    }
+
+    .show {
+      display: grid;
+      grid-template-columns: 14ch 1fr;
+      gap: 1rem;
+      padding: 0.75rem 0;
+    }
+
+    .date {
+      opacity: 0.7;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .artists {
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+      opacity: 0.85;
+    }
+
+    .artists a {
+      text-decoration: none;
+    }
+
+    .artists a:hover {
+      text-decoration: underline;
+    }
+
+    .sep {
+      opacity: 0.6;
+    }
+
+    .title {
+      font-weight: 600;
+    }
+
+    .where {
+      opacity: 0.75;
+      margin-top: 0.15rem;
+    }
+
+    .muted {
+      opacity: 0.65;
+    }
+
+    @media (max-width: 640px) {
+      .show {
+        grid-template-columns: 1fr;
+      }
+      .date {
+        white-space: normal;
+      }
+    }
+  </style>
 </BaseLayout>
